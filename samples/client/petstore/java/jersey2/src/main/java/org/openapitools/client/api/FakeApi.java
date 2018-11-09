@@ -11,6 +11,7 @@ import javax.ws.rs.core.GenericType;
 import java.math.BigDecimal;
 import org.openapitools.client.model.Client;
 import java.io.File;
+import org.openapitools.client.model.FileSchemaTestClass;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.openapitools.client.model.OuterComposite;
@@ -231,6 +232,57 @@ public class FakeApi {
       }
   /**
    * 
+   * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+   * @param fileSchemaTestClass  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void testBodyWithFileSchema(FileSchemaTestClass fileSchemaTestClass) throws ApiException {
+
+    testBodyWithFileSchemaWithHttpInfo(fileSchemaTestClass);
+  }
+
+  /**
+   * 
+   * For this test, the body for this request much reference a schema named &#x60;File&#x60;.
+   * @param fileSchemaTestClass  (required)
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> testBodyWithFileSchemaWithHttpInfo(FileSchemaTestClass fileSchemaTestClass) throws ApiException {
+    Object localVarPostBody = fileSchemaTestClass;
+    
+    // verify the required parameter 'fileSchemaTestClass' is set
+    if (fileSchemaTestClass == null) {
+      throw new ApiException(400, "Missing the required parameter 'fileSchemaTestClass' when calling testBodyWithFileSchema");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/fake/body-with-file-schema";
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    return apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * 
    * 
    * @param query  (required)
    * @param user  (required)
@@ -347,16 +399,16 @@ public class FakeApi {
    * @param _double None (required)
    * @param patternWithoutDelimiter None (required)
    * @param _byte None (required)
-   * @param integer None (optional, default to null)
-   * @param int32 None (optional, default to null)
-   * @param int64 None (optional, default to null)
-   * @param _float None (optional, default to null)
-   * @param string None (optional, default to null)
-   * @param binary None (optional, default to null)
-   * @param date None (optional, default to null)
-   * @param dateTime None (optional, default to null)
-   * @param password None (optional, default to null)
-   * @param paramCallback None (optional, default to null)
+   * @param integer None (optional)
+   * @param int32 None (optional)
+   * @param int64 None (optional)
+   * @param _float None (optional)
+   * @param string None (optional)
+   * @param binary None (optional)
+   * @param date None (optional)
+   * @param dateTime None (optional)
+   * @param password None (optional)
+   * @param paramCallback None (optional)
    * @throws ApiException if fails to make API call
    */
   public void testEndpointParameters(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, File binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws ApiException {
@@ -371,16 +423,16 @@ public class FakeApi {
    * @param _double None (required)
    * @param patternWithoutDelimiter None (required)
    * @param _byte None (required)
-   * @param integer None (optional, default to null)
-   * @param int32 None (optional, default to null)
-   * @param int64 None (optional, default to null)
-   * @param _float None (optional, default to null)
-   * @param string None (optional, default to null)
-   * @param binary None (optional, default to null)
-   * @param date None (optional, default to null)
-   * @param dateTime None (optional, default to null)
-   * @param password None (optional, default to null)
-   * @param paramCallback None (optional, default to null)
+   * @param integer None (optional)
+   * @param int32 None (optional)
+   * @param int64 None (optional)
+   * @param _float None (optional)
+   * @param string None (optional)
+   * @param binary None (optional)
+   * @param date None (optional)
+   * @param dateTime None (optional)
+   * @param password None (optional)
+   * @param paramCallback None (optional)
    * @throws ApiException if fails to make API call
    */
   public ApiResponse<Void> testEndpointParametersWithHttpInfo(BigDecimal number, Double _double, String patternWithoutDelimiter, byte[] _byte, Integer integer, Integer int32, Long int64, Float _float, String string, File binary, LocalDate date, OffsetDateTime dateTime, String password, String paramCallback) throws ApiException {
@@ -463,9 +515,9 @@ if (paramCallback != null)
   /**
    * To test enum parameters
    * To test enum parameters
-   * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
+   * @param enumHeaderStringArray Header parameter enum test (string array) (optional, default to new ArrayList&lt;String&gt;())
    * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
-   * @param enumQueryStringArray Query parameter enum test (string array) (optional)
+   * @param enumQueryStringArray Query parameter enum test (string array) (optional, default to new ArrayList&lt;String&gt;())
    * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @param enumQueryDouble Query parameter enum test (double) (optional)
@@ -481,9 +533,9 @@ if (paramCallback != null)
   /**
    * To test enum parameters
    * To test enum parameters
-   * @param enumHeaderStringArray Header parameter enum test (string array) (optional)
+   * @param enumHeaderStringArray Header parameter enum test (string array) (optional, default to new ArrayList&lt;String&gt;())
    * @param enumHeaderString Header parameter enum test (string) (optional, default to -efg)
-   * @param enumQueryStringArray Query parameter enum test (string array) (optional)
+   * @param enumQueryStringArray Query parameter enum test (string array) (optional, default to new ArrayList&lt;String&gt;())
    * @param enumQueryString Query parameter enum test (string) (optional, default to -efg)
    * @param enumQueryInteger Query parameter enum test (double) (optional)
    * @param enumQueryDouble Query parameter enum test (double) (optional)
@@ -531,6 +583,60 @@ if (enumFormString != null)
 
 
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * Fake endpoint to test group parameters (optional)
+   * Fake endpoint to test group parameters (optional)
+   * @param stringGroup String in group parameters (optional)
+   * @param booleanGroup Boolean in group parameters (optional)
+   * @param int64Group Integer in group parameters (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void testGroupParameters(Integer stringGroup, Boolean booleanGroup, Long int64Group) throws ApiException {
+
+    testGroupParametersWithHttpInfo(stringGroup, booleanGroup, int64Group);
+  }
+
+  /**
+   * Fake endpoint to test group parameters (optional)
+   * Fake endpoint to test group parameters (optional)
+   * @param stringGroup String in group parameters (optional)
+   * @param booleanGroup Boolean in group parameters (optional)
+   * @param int64Group Integer in group parameters (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<Void> testGroupParametersWithHttpInfo(Integer stringGroup, Boolean booleanGroup, Long int64Group) throws ApiException {
+    Object localVarPostBody = new Object();
+    
+    // create path and map variables
+    String localVarPath = "/fake";
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "string_group", stringGroup));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "int64_group", int64Group));
+
+    if (booleanGroup != null)
+      localVarHeaderParams.put("boolean_group", apiClient.parameterToString(booleanGroup));
+
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
    * test inline additionalProperties

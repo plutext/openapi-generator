@@ -631,6 +631,36 @@ paths:
       x-tags:
       - tag: fake_classname_tags 123#$%^
   /fake:
+    delete:
+      description: Fake endpoint to test group parameters (optional)
+      operationId: testGroupParameters
+      parameters:
+      - description: String in group parameters
+        in: query
+        name: string_group
+        schema:
+          type: integer
+      - description: Boolean in group parameters
+        in: header
+        name: boolean_group
+        schema:
+          type: boolean
+      - description: Integer in group parameters
+        in: query
+        name: int64_group
+        schema:
+          format: int64
+          type: integer
+      responses:
+        400:
+          content: {}
+          description: Someting wrong
+      summary: Fake endpoint to test group parameters (optional)
+      tags:
+      - fake
+      x-group-parameters: true
+      x-tags:
+      - tag: fake
     get:
       description: To test enum parameters
       operationId: testEnumParameters
@@ -1016,8 +1046,8 @@ paths:
       - tag: fake
   /another-fake/dummy:
     patch:
-      description: To test special tags
-      operationId: test_special_tags
+      description: To test special tags and operation ID starting with number
+      operationId: 123_test_@#$%_special_tags
       requestBody:
         content:
           application/json:
@@ -1037,18 +1067,81 @@ paths:
       - $another-fake?
       x-tags:
       - tag: $another-fake?
+  /fake/body-with-file-schema:
+    put:
+      description: For this test, the body for this request much reference a schema named `File`.
+      operationId: testBodyWithFileSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileSchemaTestClass'
+        required: true
+      responses:
+        200:
+          content: {}
+          description: Success
+      tags:
+      - fake
+      x-tags:
+      - tag: fake
+  /fake/{petId}/uploadImageWithRequiredFile:
+    post:
+      operationId: uploadFileWithRequiredFile
+      parameters:
+      - description: ID of pet to update
+        in: path
+        name: petId
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                additionalMetadata:
+                  description: Additional data to pass to server
+                  type: string
+                requiredFile:
+                  description: file to upload
+                  format: binary
+                  type: string
+              required:
+              - requiredFile
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: successful operation
+      security:
+      - petstore_auth:
+        - write:pets
+        - read:pets
+      summary: uploads an image (required)
+      tags:
+      - pet
+      x-tags:
+      - tag: pet
 components:
   schemas:
     Category:
       example:
-        name: name
+        name: default-name
         id: 6
       properties:
         id:
           format: int64
           type: integer
         name:
+          default: default-name
           type: string
+      required:
+      - name
       type: object
       xml:
         name: Category
@@ -1342,14 +1435,18 @@ components:
           type: array
       type: object
     OuterComposite:
-      example: {}
+      example:
+        my_string: my_string
+        my_number: 0.80082819046101150206595775671303272247314453125
+        my_boolean: true
       properties:
         my_number:
-          $ref: '#/components/schemas/OuterNumber'
+          type: number
         my_string:
-          $ref: '#/components/schemas/OuterString'
+          type: string
         my_boolean:
-          $ref: '#/components/schemas/OuterBoolean'
+          type: boolean
+          x-codegen-body-parameter-name: boolean_post_body
       type: object
     format_test:
       properties:
@@ -1435,6 +1532,21 @@ components:
     OuterBoolean:
       type: boolean
       x-codegen-body-parameter-name: boolean_post_body
+    FileSchemaTestClass:
+      example:
+        file:
+          sourceURI: sourceURI
+        files:
+        - sourceURI: sourceURI
+        - sourceURI: sourceURI
+      properties:
+        file:
+          $ref: '#/components/schemas/File'
+        files:
+          items:
+            $ref: '#/components/schemas/File'
+          type: array
+      type: object
     Animal:
       discriminator:
         propertyName: className
@@ -1446,6 +1558,10 @@ components:
           type: string
       required:
       - className
+      type: object
+    StringBooleanMap:
+      additionalProperties:
+        type: boolean
       type: object
     Cat:
       allOf:
@@ -1469,6 +1585,14 @@ components:
             - lower
             type: string
           type: object
+        direct_map:
+          additionalProperties:
+            type: boolean
+          type: object
+        indirect_map:
+          additionalProperties:
+            type: boolean
+          type: object
       type: object
     Tag:
       example:
@@ -1487,6 +1611,15 @@ components:
       items:
         $ref: '#/components/schemas/Animal'
       type: array
+    File:
+      description: Must be named `File` for test.
+      example:
+        sourceURI: sourceURI
+      properties:
+        sourceURI:
+          description: Test capitalization
+          type: string
+      type: object
     Pet:
       example:
         photoUrls:
@@ -1495,7 +1628,7 @@ components:
         name: doggie
         id: 0
         category:
-          name: name
+          name: default-name
           id: 6
         tags:
         - name: name

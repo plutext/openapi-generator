@@ -43,12 +43,12 @@ public class EnumArrays   {
           return b;
         }
       }
-      return null;
+      throw new IllegalArgumentException("Unexpected value '" + text + "'");
     }
   }
 
   @JsonProperty("just_symbol")
-  private JustSymbolEnum justSymbol = null;
+  private JustSymbolEnum justSymbol;
 
   /**
    * Gets or Sets arrayEnum
@@ -77,7 +77,7 @@ public class EnumArrays   {
           return b;
         }
       }
-      return null;
+      throw new IllegalArgumentException("Unexpected value '" + text + "'");
     }
   }
 
@@ -93,7 +93,7 @@ public class EnumArrays   {
   /**
    * Get justSymbol
    * @return justSymbol
-  **/
+  */
   @ApiModelProperty(value = "")
 
 
@@ -121,7 +121,7 @@ public class EnumArrays   {
   /**
    * Get arrayEnum
    * @return arrayEnum
-  **/
+  */
   @ApiModelProperty(value = "")
 
 
